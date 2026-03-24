@@ -3,11 +3,6 @@
 <head><title>Регистрация</title></head>
 <body>
     <h2>Регистрация</h2>
-    {% if messages %}
-        {% for message in messages %}
-            <p>{{ message }}</p>
-        {% endfor %}
-    {% endif %}
     <form method="POST">
         {% csrf_token %}
         <input type="text" name="name" placeholder="Имя" required><br>

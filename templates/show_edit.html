@@ -3,11 +3,6 @@
 <head><title>Редактировать</title></head>
 <body>
     <h2>Редактировать студента</h2>
-    {% if messages %}
-        {% for message in messages %}
-            <p>{{ message }}</p>
-        {% endfor %}
-    {% endif %}
     <form method="POST">
         {% csrf_token %}
         <label>Имя:</label>
