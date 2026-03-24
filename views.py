@@ -15,7 +15,6 @@ def login_view(request):
             request.session['user_name'] = user.name
             user.last_login = timezone.now()
             user.save()
-            messages.success(request, 'Вход выполнен!')
             return redirect('show_students')
     return render(request, 'login.html')
 
