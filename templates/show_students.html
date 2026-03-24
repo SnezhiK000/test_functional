@@ -25,12 +25,6 @@
     <a href="{% url 'show_create' %}">Добавить студента</a>
     <a href="{% url 'logout_view' %}">Выход</a>
 
-    {% if messages %}
-        {% for message in messages %}
-            <p>{{ message }}</p>
-        {% endfor %}
-    {% endif %}
-
     <div>
         {% for student in students %}
         <p>Имя: {{ student.name }}</p>
