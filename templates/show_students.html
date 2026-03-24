@@ -22,8 +22,6 @@
         <button type="submit">Применить</button>
     </form>
 
-    <a href="{% url 'show_create' %}">Добавить студента</a>
-    <a href="{% url 'logout_view' %}">Выход</a>
 
     <div>
         {% for student in students %}
@@ -33,7 +31,8 @@
         <p>Курс: {{ course.name }}</p>
         {% endfor %}
         <a href="{% url 'show_edit' student.id %}">Изменить</a>
-        <form method="POST" action="{% url 'show_delete' student.id %}" style="display:inline;">
+
+        <form method="POST" action="{% url 'show_delete' student.id %}">
             {% csrf_token %}
             <button type="submit" onclick="return confirm('Удалить?')">Удалить</button>
         </form>

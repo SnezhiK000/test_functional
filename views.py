@@ -68,6 +68,7 @@ def show_students(request):
 
 def show_create(request):
     if request.method == 'POST':
+        id = Student.objects.count() +1
         name = request.POST.get('name')
         password = request.POST.get('password')
         group_id = request.POST.get('group')
@@ -91,13 +92,19 @@ def show_edit(request, id):
     student = get_object_or_404(Student, id=id)
 
     if request.method == 'POST':
-        student.id = Student.objects.count() + 1
         student.name = request.POST.get('name')
+        student.password = request.POST.get('password')
+        group_id = request.POST.get('group')
+        if group_id:
+            student.group = Group.objects.get(id=group_id)
         student.save()
-        messages.success(request, 'Обновлено!')
         return redirect('show_students')
 
-    return render(request, 'show_edit.html', {'student': student})
+    groups = Group.objects.all()
+    return render(request, 'show_edit.html', {
+        'student': student,
+        'groups': groups
+    })
 
 
 def show_delete(request, id):
