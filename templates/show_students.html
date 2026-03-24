@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Студентик</title>
+</head>
+<body>
+    <form method="GET">
+        <input type="text" name="search" value="{{ search }}" placeholder="Поиск">
+        <select name="group">
+            <option value="">Все группы</option>
+            {% for group in groups %}
+                <option value="{{ group.id }}" {% if group_id == group.id %} selected {% endif %}>
+                    {{ group.name }}
+                </option>
+            {% endfor %}
+        </select>
+        <select name="sort">
+            <option value="name" {% if sort == 'name' %} selected {% endif %}>По имени (А-Я)</option>
+            <option value="name_desc" {% if sort == 'name_desc' %} selected{% endif %}>По имени (Я-А)</option>
+        </select>
+        <button type="submit">Применить</button>
+    </form>
+
+    <a href="{% url 'show_create' %}">Добавить студента</a>
+    <a href="{% url 'logout_view' %}">Выход</a>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <div>
+        {% for student in students %}
+        <p>Имя: {{ student.name }}</p>
+        <p>Группа: {{ student.group.name }}</p>
+        {% for course in student.course.all %}
+        <p>Курс: {{ course.name }}</p>
+        {% endfor %}
+        <a href="{% url 'show_edit' student.id %}">Изменить</a>
+        <form method="POST" action="{% url 'show_delete' student.id %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" onclick="return confirm('Удалить?')">Удалить</button>
+        </form>
+        <hr>
+        {% endfor %}
+    </div>
+</body>
+</html>

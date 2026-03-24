@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head><title>Добавить</title></head>
+<body>
+    <h2>Добавить студента</h2>
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Имя" required><br>
+        <input type="password" name="password" placeholder="Пароль" required><br>
+        <select name="group" required>
+            <option value="">Выберите группу</option>
+            {% for group in groups %}
+                <option value="{{ group.id }}">{{ group.name }}</option>
+            {% endfor %}
+        </select><br>
+        <p>Курсы:</p>
+        {% for course in courses %}
+            <input type="checkbox" name="courses" value="{{ course.id }}"> {{ course.name }}<br>
+        {% endfor %}
+        <button type="submit">Сохранить</button>
+    </form>
+    <a href="{% url 'show_students' %}">Назад</a>
+</body>
+</html>
